@@ -1,0 +1,72 @@
+<div class="product-list-container">
+  <header class="header">
+    <div class="header__search">
+      <input
+        id="search-input"
+        type="search"
+        class="header__search-input"
+        placeholder="Search…"
+        [formControl]="searchControl"
+        autocomplete="off"
+      />
+    </div>
+    <button class="primary-button">Agregar</button>
+  </header>
+  <section class="card">
+    <div class="table-container">
+      <table class="table">
+        <thead>
+          <tr class="table__tr">
+            <th class="table__th table__th--logo">Logo</th>
+            <th class="table__th">Nombre del producto</th>
+            <th class="table__th">Descripción</th>
+            <th class="table__th">Fecha de liberación</th>
+            <th class="table__th">Fecha de reestructuración</th>
+            <th class="table__th table__th--actions"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @if(loading()) {
+          <tr>
+            <td class="table__loading-cell" colspan="5">
+              <span>Loading...</span>
+            </td>
+          </tr>
+          } @else { @for (product of products; track product.id) {
+          <tr class="table__tr">
+            <td class="table__td">
+              <div class="product-logo">
+                <img
+                  [src]="product.logo"
+                  [alt]="product.name + ' logo'"
+                  class="product-logo__img"
+                  loading="lazy"
+                  (error)="$any($event.target).src = 'default-logo.svg'"
+                />
+              </div>
+            </td>
+            <td class="table__td">{{ product.name }}</td>
+            <td class="table__td">{{ product.description }}</td>
+            <td class="table__td">{{ product.date_release }}</td>
+            <td class="table__td">{{ product.date_revision }}</td>
+          </tr>
+          } }
+        </tbody>
+      </table>
+    </div>
+    <footer class="table-footer">
+      <div class="products-count">{{ products.length ||'0' }} Resultados</div>
+      <select
+        id="page-size"
+        class="page-size"
+        [value]="pageSize()"
+        (change)="setPageSize(+$any($event.target).value)"
+        aria-label="Cantidad de filas por página"
+      >
+        @for (size of pageSizeOptions; track size) {
+        <option [value]="size" [selected]="pageSize() === size">{{ size }}</option>
+        }
+      </select>
+    </footer>
+  </section>
+</div>

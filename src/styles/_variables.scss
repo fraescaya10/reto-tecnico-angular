@@ -4,8 +4,12 @@
 
   --color-bg-body: #f9fafc;
   --color-bg-surface: #ffffff;
+  --color-border: #e2e8f0;
+  --color-border-dark: #b7b7b9;
+  --color-border-focus: #2f7abf;
 
   --text-primary: #0f265c;
+  --text-secondary: #6c757d;
   --text-primary-disabled: #9fa8be;
 
   --color-error: #dc3545;
@@ -15,7 +19,7 @@
   --color-gray-200: #e9ecf3;
   --color-gray-300: #dee3ed;
 
-  --font-family-base: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-family-base: 'Helvetica Neue', 'Arial', sans-serif;
   --font-size-xs: 11px;
   --font-size-sm: 13px;
   --font-size-base: 14px;
