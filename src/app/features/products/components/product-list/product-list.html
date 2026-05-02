@@ -32,7 +32,13 @@
               <span>Loading...</span>
             </td>
           </tr>
-          } @else { @for (product of products; track product.id) {
+          } @if(productsCount() === 0) {
+          <tr>
+            <td class="table__empty-cell" colspan="6">
+              <span>No se encontraron productos</span>
+            </td>
+          </tr>
+          } @else { @for (product of products(); track product.id) {
           <tr class="table__tr">
             <td class="table__td">
               <div class="product-logo">
@@ -88,8 +94,9 @@
         </tbody>
       </table>
     </div>
+    @if(productsCount() > 0) {
     <footer class="table-footer">
-      <div class="products-count">{{ products.length ||'0' }} Resultados</div>
+      <div class="products-count">{{ productsCount() ||'0' }} Resultados</div>
       <select
         id="page-size"
         class="page-size"
@@ -102,5 +109,6 @@
         }
       </select>
     </footer>
+    }
   </section>
 </div>

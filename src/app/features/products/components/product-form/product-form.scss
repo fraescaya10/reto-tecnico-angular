@@ -57,6 +57,7 @@
 }
 
 .form-buttons {
+  grid-column: 1 / -1;
   padding: var(--space-5) 0;
   display: flex;
   gap: var(--space-15);

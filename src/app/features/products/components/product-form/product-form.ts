@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
   AbstractControl,
@@ -7,7 +7,10 @@ import {
   ValidationErrors,
   Validators,
 } from '@angular/forms';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { ProductService } from '../../services/product.service';
+import { Product } from '../../models/Product';
 
 @Component({
   selector: 'app-product-form',
@@ -19,7 +22,10 @@ import { Router } from '@angular/router';
 export class ProductForm {
   private readonly fb = inject(FormBuilder);
   private readonly router = inject(Router);
-  
+  private readonly productService = inject(ProductService);
+
+  readonly loading = signal(false);
+
   productForm = this.fb.group({
     id: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(10)]],
     name: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(100)]],
@@ -45,10 +51,21 @@ export class ProductForm {
   }
 
   onSubmit() {
-    if (this.productForm.valid) {
-      console.log('Form submitted', this.productForm.value);
-      this.productForm.reset();
-    }
+    if (this.productForm.invalid || this.loading()) return;
+
+    const product = this.productForm.getRawValue() as Product;
+    this.loading.set(true);
+
+    this.productService.createProduct(product).subscribe({
+      next: () => {
+        this.loading.set(false);
+        this.router.navigate(['/products']);
+      },
+      error: (errorResponse: HttpErrorResponse) => {
+        console.error(errorResponse.error.message);
+        this.loading.set(false);
+      },
+    });
   }
 
   onCancel() {
