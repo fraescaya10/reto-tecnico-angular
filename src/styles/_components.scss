@@ -1,0 +1,70 @@
+/* Card */
+.card {
+  background-color: var(--color-bg-surface);
+  padding: var(--space-7);
+}
+
+/* Form control base */
+.form-control {
+  width: 100%;
+  padding: 10px var(--space-3);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+  background: var(--color-bg-surface);
+  transition: border-color var(--transition-fast);
+
+  &::placeholder {
+    color: var(--text-primary-disabled);
+  }
+
+  &:focus {
+    outline: none;
+    border-color: var(--color-border-focus);
+  }
+
+  &[aria-invalid='true'] {
+    border-color: var(--color-error);
+
+    &:focus {
+      box-shadow: var(--shadow-error-focus);
+    }
+  }
+
+  &:disabled {
+    color: var(--text-primary-disabled);
+    cursor: not-allowed;
+  }
+}
+
+/* Buttons */
+.primary-button {
+  padding: 18px;
+  border: none;
+  border-radius: var(--radius-xs);
+  font-weight: var(--font-weight-bold);
+  background-color: var(--color-primary);
+  color: var(--text-primary);
+
+  &:disabled {
+    background-color: var(--color-primary-disabled);
+    color: var(--text-primary-disabled);
+    cursor: not-allowed;
+  }
+}
+
+.secondary-button {
+  padding: 18px;
+  border: none;
+  border-radius: var(--radius-xs);
+  font-weight: var(--font-weight-bold);
+  background-color: var(--color-gray-200);
+  color: var(--text-primary);
+}
+
+/* Feedback */
+.error-message {
+  color: var(--color-error);
+  font-size: 12px;
+  font-weight: var(--font-weight-medium);
+}

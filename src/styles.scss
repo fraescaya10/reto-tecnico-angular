@@ -1,34 +1,4 @@
-/* You can add global styles to this file, and also import other style files */
 @use 'styles/variables';
-@use 'styles/typography';
 @use 'styles/reset';
-
-.error-message {
-  color: var(--color-error);
-  font-size: 12px;
-  font-weight: 500;
-}
-
-.primary-button {
-  padding: 18px;
-  border: none;
-  border-radius: 3px;
-  font-weight: bold;
-  background-color: var(--color-primary);
-  color: var(--text-primary);
-
-  &:disabled {
-    background-color: var(--color-primary-disabled);
-    color: var(--text-primary-disabled);
-    cursor: not-allowed;
-  }
-}
-
-.secondary-button {
-  padding: 18px;
-  border: none;
-  border-radius: 3px;
-  font-weight: bold;
-  background-color: var(--color-gray-200);
-  color: var(--text-primary);
-}
+@use 'styles/typography';
+@use 'styles/components';

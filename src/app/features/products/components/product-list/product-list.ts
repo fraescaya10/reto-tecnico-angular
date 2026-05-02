@@ -1,5 +1,6 @@
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-product-list',
@@ -9,6 +10,7 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProductList {
+  private readonly router = inject(Router);
   protected readonly searchControl = new FormControl('', { nonNullable: true });
   readonly loading = signal(false);
   readonly pageSize = signal(10);
@@ -98,6 +100,10 @@ export class ProductList {
   ];
 
   setPageSize(arg0: number) {
-    throw new Error('Method not implemented.');
+    console.log(arg0);
+  }
+
+  openAddForm() {
+    this.router.navigate(['/products/add']);
   }
 }

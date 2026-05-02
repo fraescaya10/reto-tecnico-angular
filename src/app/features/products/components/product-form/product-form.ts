@@ -7,6 +7,7 @@ import {
   ValidationErrors,
   Validators,
 } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-product-form',
@@ -17,6 +18,8 @@ import {
 })
 export class ProductForm {
   private readonly fb = inject(FormBuilder);
+  private readonly router = inject(Router);
+  
   productForm = this.fb.group({
     id: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(10)]],
     name: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(100)]],
@@ -51,6 +54,10 @@ export class ProductForm {
   onCancel() {
     console.log('Cancel clicked');
     this.productForm.reset();
+  }
+
+  goBack() {
+    this.router.navigate(['/products']);
   }
 
   private urlValidator(control: AbstractControl): ValidationErrors | null {

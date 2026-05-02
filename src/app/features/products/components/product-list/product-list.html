@@ -4,13 +4,13 @@
       <input
         id="search-input"
         type="search"
-        class="header__search-input"
+        class="header__search-input form-control"
         placeholder="Search…"
         [formControl]="searchControl"
         autocomplete="off"
       />
     </div>
-    <button class="primary-button">Agregar</button>
+    <button class="primary-button" (click)="openAddForm()">Agregar</button>
   </header>
   <section class="card">
     <div class="table-container">

@@ -1,6 +1,9 @@
 <div class="product-form-container">
   <section class="card">
     <header class="header">
+      <a class="back-link" (click)="goBack()" aria-label="Volver a la lista de productos">
+        ← Volver
+      </a>
       <h1>Formulario de Registro</h1>
     </header>
     <form
@@ -17,6 +20,7 @@
           id="id"
           formControlName="id"
           placeholder="Ingrese id del producto"
+          class="form-control"
           aria-label="ID"
           [attr.aria-invalid]="productForm.controls.id.invalid && productForm.controls.id.touched"
         />
@@ -39,6 +43,7 @@
           id="name"
           formControlName="name"
           placeholder="Ingrese el nombre del producto"
+          class="form-control"
           aria-label="Nombre"
           [attr.aria-invalid]="productForm.controls.name.invalid && productForm.controls.name.touched"
         />
@@ -61,6 +66,7 @@
           id="description"
           formControlName="description"
           placeholder="Ingrese la descripción del producto"
+          class="form-control"
           aria-label="Descripción"
           [attr.aria-invalid]="productForm.controls.description.invalid && productForm.controls.description.touched"
         />
@@ -83,6 +89,7 @@
           id="logo"
           formControlName="logo"
           placeholder="https://ejemplo.com/logo.png"
+          class="form-control"
           aria-label="Logo"
           [attr.aria-invalid]="productForm.controls.logo.invalid && productForm.controls.logo.touched"
         />
@@ -102,6 +109,7 @@
           type="date"
           id="date_release"
           formControlName="date_release"
+          class="form-control"
           aria-label="Fecha liberación"
           [attr.aria-invalid]="productForm.controls.date_release.invalid && productForm.controls.date_release.touched"
         />
@@ -121,6 +129,7 @@
           type="date"
           id="date_revision"
           formControlName="date_revision"
+          class="form-control"
           aria-label="Fecha Revisión"
           [attr.aria-invalid]="productForm.controls.date_revision.invalid && productForm.controls.date_revision.touched"
         />
