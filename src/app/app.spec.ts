@@ -1,4 +1,5 @@
 import { TestBed } from '@angular/core/testing';
+import { beforeEach, describe, expect, it } from 'vitest';
 import { App } from './app';
 
 describe('App', () => {
@@ -18,6 +19,14 @@ describe('App', () => {
     const fixture = TestBed.createComponent(App);
     await fixture.whenStable();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Reto Tecnico Angular');
+    expect(compiled.querySelector('h1')?.textContent).toContain('BANCO');
+  });
+
+  it('should have a section component with class bank-section', () => {
+    const fixture = TestBed.createComponent(App);
+    const compiled = fixture.nativeElement as HTMLElement;
+    const section = compiled.querySelector('section');
+    expect(section).toBeTruthy();
+    expect(section?.classList.contains('bank-section')).toBe(true);
   });
 });

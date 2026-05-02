@@ -7,10 +7,10 @@ import {
   ValidationErrors,
   Validators,
 } from '@angular/forms';
-import { HttpErrorResponse } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductService } from '../../services/product.service';
 import { Product } from '../../models/Product';
+import { NotificationService } from '../../../../shared/services/notification.service';
 
 @Component({
   selector: 'app-product-form',
@@ -24,6 +24,7 @@ export class ProductForm {
   private readonly router = inject(Router);
   private readonly route = inject(ActivatedRoute);
   private readonly productService = inject(ProductService);
+  private readonly notificationService = inject(NotificationService);
 
   readonly loading = signal(false);
   readonly isEditMode = signal(false);
@@ -57,8 +58,7 @@ export class ProductForm {
             this.productForm.patchValue(product);
             this.loading.set(false);
           },
-          error: (errorResponse: HttpErrorResponse) => {
-            console.error(errorResponse.error.message);
+          error: () => {
             this.loading.set(false);
           },
         });
@@ -92,10 +92,11 @@ export class ProductForm {
     request$.subscribe({
       next: () => {
         this.loading.set(false);
+        const msg = this.isEditMode() ? 'Producto actualizado correctamente' : 'Producto creado correctamente';
+        this.notificationService.show(msg, 'success');
         this.router.navigate(['/products']);
       },
-      error: (errorResponse: HttpErrorResponse) => {
-        console.error(errorResponse.error.message);
+      error: () => {
         this.loading.set(false);
       },
     });

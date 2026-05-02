@@ -8,6 +8,7 @@
         placeholder="Search…"
         [formControl]="searchControl"
         autocomplete="off"
+        aria-label="Buscar producto"
       />
     </div>
     <button class="primary-button" (click)="openAddForm()">Agregar</button>
@@ -32,7 +33,7 @@
               <span>Loading...</span>
             </td>
           </tr>
-          } @if(productsCount() === 0) {
+          } @else if(productsCount() === 0) {
           <tr>
             <td class="table__empty-cell" colspan="6">
               <span>No se encontraron productos</span>

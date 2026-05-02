@@ -10,7 +10,7 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faEllipsisVertical, faPencil, faTrash } from '@fortawesome/free-solid-svg-icons';
-import { startWith, debounceTime, distinctUntilChanged, switchMap, Observable, tap } from 'rxjs';
+import { startWith, debounceTime, distinctUntilChanged, switchMap, Observable, tap, catchError, of } from 'rxjs';
 import { ProductService } from '../../services/product.service';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { Product } from '../../models/Product';
@@ -52,7 +52,13 @@ export class ProductList {
       this.loading.set(true);
       return (
         term ? this.productService.searchProducts(term) : this.productService.getProducts()
-      ).pipe(tap(() => this.loading.set(false)));
+      ).pipe(
+        tap(() => this.loading.set(false)),
+        catchError(() => {
+          this.loading.set(false);
+          return of([]);
+        }),
+      );
     }),
   );
 
