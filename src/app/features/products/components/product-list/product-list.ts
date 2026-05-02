@@ -10,7 +10,19 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faEllipsisVertical, faPencil, faTrash } from '@fortawesome/free-solid-svg-icons';
-import { startWith, debounceTime, distinctUntilChanged, switchMap, Observable, tap, catchError, of, Subject, combineLatest, map } from 'rxjs';
+import {
+  startWith,
+  debounceTime,
+  distinctUntilChanged,
+  switchMap,
+  Observable,
+  tap,
+  catchError,
+  of,
+  Subject,
+  combineLatest,
+  map,
+} from 'rxjs';
 import { ProductService } from '../../services/product.service';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { Product } from '../../models/Product';
@@ -122,11 +134,11 @@ export class ProductList {
     this.router.navigate(['/products/edit', id]);
   }
 
-  deleteProduct(id: string) {
+  deleteProduct(id: string, productName: string) {
     this.closeMenu();
     this.confirmDialogService.open({
       title: 'Eliminar producto',
-      message: `¿Estás seguro de que deseas eliminar el producto "${id}"? Esta acción no se puede deshacer.`,
+      message: `¿Estás seguro de eliminar el producto "${productName}"?`,
       confirmLabel: 'Eliminar',
       onConfirm: () => {
         this.productService.deleteProduct(id).subscribe({

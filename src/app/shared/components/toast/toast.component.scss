@@ -1,13 +1,21 @@
 .toast-container {
   position: fixed;
-  bottom: var(--space-6);
-  right: var(--space-6);
+  bottom: var(--space-3);
+  right: var(--space-3);
+  left: var(--space-3);
   display: flex;
   flex-direction: column;
   gap: var(--space-3);
   z-index: 1000;
-  max-width: 360px;
-  width: calc(100vw - var(--space-12));
+  max-width: none;
+  width: auto;
+
+  @media (min-width: 480px) {
+    left: auto;
+    right: var(--space-6);
+    bottom: var(--space-6);
+    max-width: 360px;
+  }
 }
 
 .toast {

@@ -6,14 +6,23 @@
 }
 
 .title {
-  margin: 10px auto;
+  margin: var(--space-3) auto;
   text-align: center;
+  font-size: var(--font-size-lg);
+
+  @media (min-width: 768px) {
+    font-size: var(--font-size-xl);
+  }
 }
 
 .bank-section {
-  margin: var(--space-7);
+  margin: var(--space-4);
   color: var(--text-primary);
   background-color: var(--color-gray-100);
   flex: 1;
   box-sizing: border-box;
+
+  @media (min-width: 768px) {
+    margin: var(--space-7);
+  }
 }

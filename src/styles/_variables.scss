@@ -17,6 +17,7 @@
   --text-primary: #0f265c;
   --text-secondary: #6c757d;
   --text-primary-disabled: #9fa8be;
+  --text-form-control: #495057;
 
   /* Colors — Feedback */
   --color-error: #e66a6a;
@@ -39,6 +40,7 @@
   --font-size-xl: 18px;
   --font-size-2xl: 20px;
   --font-size-3xl: 24px;
+  --font-size-4xl: 28px;
 
   /* Typography — Weight */
   --font-weight-regular: 400;
@@ -76,6 +78,11 @@
 
   /* Transitions */
   --transition-fast: 100ms ease;
+
+  /* Breakpoints */
+  --bp-sm: 480px;
+  --bp-md: 768px;
+  --bp-lg: 1024px;
 
   /* Shadows */
   --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.15);

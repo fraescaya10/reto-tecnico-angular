@@ -1,14 +1,18 @@
 @if (dialogService.config(); as config) {
 <div class="dialog-overlay" role="dialog" aria-modal="true" [attr.aria-label]="config.title" (click)="dialogService.cancel()">
   <div class="dialog-card" (click)="$event.stopPropagation()">
-    <h2 class="dialog-card__title">{{ config.title }}</h2>
-    <p class="dialog-card__message">{{ config.message }}</p>
+    <div class="dialog-card__content">
+      @if (config.title && config.title !== 'Eliminar producto') {
+        <h2 class="dialog-card__title">{{ config.title }}</h2>
+      }
+      <p class="dialog-card__message">{{ config.message }}</p>
+    </div>
     <div class="dialog-card__actions">
       <button class="secondary-button" type="button" (click)="dialogService.cancel()">
-        {{ config.cancelLabel }}
+        {{ config.cancelLabel || 'Cancelar' }}
       </button>
-      <button class="danger-button" type="button" (click)="dialogService.confirm()">
-        {{ config.confirmLabel }}
+      <button class="primary-button" type="button" (click)="dialogService.confirm()">
+        {{ config.confirmLabel || 'Confirmar' }}
       </button>
     </div>
   </div>

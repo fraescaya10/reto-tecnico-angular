@@ -1,19 +1,33 @@
 .product-form-container {
   max-width: 860px;
   margin: 0 auto;
-  padding: var(--space-8) var(--space-6);
+  padding: var(--space-4);
+
+  @media (min-width: 768px) {
+    padding: var(--space-8) var(--space-6);
+  }
 }
 
 .card {
-  padding: 5px;
+  padding: var(--space-4);
+
+  @media (min-width: 768px) {
+    padding: var(--space-1);
+  }
 }
 
 .header {
-  padding: var(--space-5);
+  padding: var(--space-3);
   border-bottom: var(--border-width) solid var(--color-border-dark);
+
+  @media (min-width: 768px) {
+    padding: var(--space-5);
+  }
 
   h1 {
     text-align: center;
+    font-size: var(--font-size-4xl);
+    color: var(--text-form-control);
   }
 }
 
@@ -34,21 +48,26 @@
 
 .form {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   gap: var(--space-5);
-  padding: var(--space-7);
+  padding: var(--space-4);
   width: 100%;
+
+  @media (min-width: 768px) {
+    grid-template-columns: 1fr 1fr;
+    padding: var(--space-7);
+  }
 }
 
 .form-group {
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: var(--space-2);
 
   label {
     font-weight: var(--font-weight-bold);
     font-size: var(--font-size-base);
-    color: var(--text-primary);
+    color: var(--text-form-control);
   }
 
   &:has(input:disabled) label {
@@ -58,8 +77,15 @@
 
 .form-buttons {
   grid-column: 1 / -1;
-  padding: var(--space-5) 0;
+  padding: var(--space-3) 0;
   display: flex;
-  gap: var(--space-15);
+  flex-direction: column;
+  gap: var(--space-4);
   justify-content: center;
+
+  @media (min-width: 768px) {
+    flex-direction: row;
+    gap: var(--space-15);
+    padding: var(--space-5) 0;
+  }
 }
