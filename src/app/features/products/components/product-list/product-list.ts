@@ -10,10 +10,12 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faEllipsisVertical, faPencil, faTrash } from '@fortawesome/free-solid-svg-icons';
-import { startWith, debounceTime, distinctUntilChanged, switchMap, Observable, tap, catchError, of } from 'rxjs';
+import { startWith, debounceTime, distinctUntilChanged, switchMap, Observable, tap, catchError, of, Subject, combineLatest, map } from 'rxjs';
 import { ProductService } from '../../services/product.service';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { Product } from '../../models/Product';
+import { ConfirmDialogService } from '../../../../shared/services/confirm-dialog.service';
+import { NotificationService } from '../../../../shared/services/notification.service';
 
 interface MenuPosition {
   top: number;
@@ -31,6 +33,10 @@ interface MenuPosition {
 export class ProductList {
   private readonly router = inject(Router);
   private readonly productService = inject(ProductService);
+  private readonly confirmDialogService = inject(ConfirmDialogService);
+  private readonly notificationService = inject(NotificationService);
+
+  private readonly refresh$ = new Subject<void>();
 
   protected readonly ellipsisVertical = faEllipsisVertical;
   protected readonly pencil = faPencil;
@@ -44,10 +50,11 @@ export class ProductList {
   readonly menuPosition = signal<MenuPosition | null>(null);
   readonly menuHeight = 92;
 
-  products$: Observable<Product[]> = this.searchControl.valueChanges.pipe(
-    startWith(''),
-    debounceTime(300),
-    distinctUntilChanged(),
+  products$: Observable<Product[]> = combineLatest([
+    this.searchControl.valueChanges.pipe(startWith(''), debounceTime(300), distinctUntilChanged()),
+    this.refresh$.pipe(startWith(null)),
+  ]).pipe(
+    map(([term]) => term),
     switchMap((term: string): Observable<Product[]> => {
       this.loading.set(true);
       return (
@@ -117,5 +124,18 @@ export class ProductList {
 
   deleteProduct(id: string) {
     this.closeMenu();
+    this.confirmDialogService.open({
+      title: 'Eliminar producto',
+      message: `¿Estás seguro de que deseas eliminar el producto "${id}"? Esta acción no se puede deshacer.`,
+      confirmLabel: 'Eliminar',
+      onConfirm: () => {
+        this.productService.deleteProduct(id).subscribe({
+          next: () => {
+            this.notificationService.show('Producto eliminado correctamente', 'success');
+            this.refresh$.next();
+          },
+        });
+      },
+    });
   }
 }

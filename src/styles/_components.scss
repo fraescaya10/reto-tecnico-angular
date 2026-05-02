@@ -62,6 +62,19 @@
   color: var(--text-primary);
 }
 
+.danger-button {
+  padding: 18px;
+  border: none;
+  border-radius: var(--radius-xs);
+  font-weight: var(--font-weight-bold);
+  background-color: var(--color-danger-500);
+  color: #ffffff;
+
+  &:hover {
+    background-color: color-mix(in srgb, var(--color-danger-500) 85%, black);
+  }
+}
+
 /* Feedback */
 .error-message {
   color: var(--color-error);
