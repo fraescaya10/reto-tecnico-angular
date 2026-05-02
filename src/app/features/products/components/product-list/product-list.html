@@ -28,7 +28,7 @@
         <tbody>
           @if(loading()) {
           <tr>
-            <td class="table__loading-cell" colspan="5">
+            <td class="table__loading-cell" colspan="6">
               <span>Loading...</span>
             </td>
           </tr>
@@ -49,6 +49,40 @@
             <td class="table__td">{{ product.description }}</td>
             <td class="table__td">{{ product.date_release }}</td>
             <td class="table__td">{{ product.date_revision }}</td>
+            <td class="table__td table__td--actions">
+              <div class="actions-cell">
+                <button
+                  class="actions-btn"
+                  type="button"
+                  aria-label="Acciones"
+                  (click)="toggleMenu(product.id, $event)"
+                >
+                  <fa-icon [icon]="ellipsisVertical"></fa-icon>
+                </button>
+              </div>
+              @if (openMenuId() === product.id && menuPosition()) {
+              <div
+                class="dropdown-menu"
+                [class.dropdown-menu--above]="menuPosition()?.placement === 'above'"
+                [style.top.px]="menuPosition()?.top"
+                [style.left.px]="menuPosition()?.left"
+                (click)="$event.stopPropagation()"
+              >
+                <button class="dropdown-item" type="button" (click)="openEditForm(product.id)">
+                  <fa-icon [icon]="pencil"></fa-icon>
+                  Editar
+                </button>
+                <button
+                  class="dropdown-item dropdown-item--danger"
+                  type="button"
+                  (click)="deleteProduct(product.id)"
+                >
+                  <fa-icon [icon]="trash"></fa-icon>
+                  Eliminar
+                </button>
+              </div>
+              }
+            </td>
           </tr>
           } }
         </tbody>
