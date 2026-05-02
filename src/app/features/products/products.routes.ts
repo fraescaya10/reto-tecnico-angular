@@ -6,21 +6,17 @@ export const PRODUCTS_ROUTES: Routes = [
     loadComponent: () =>
       import('./components/product-list/product-list').then((m) => m.ProductList),
   },
-  // {
-  //   path: 'add',
-  //   loadComponent: () =>
-  //     import('./components/product-form/product-form.component').then(
-  //       (m) => m.ProductFormComponent
-  //     ),
-  //   canDeactivate: [unsavedChangesGuard],
-  // },
-  // {
-  //   path: 'edit/:id',
-  //   loadComponent: () =>
-  //     import('./components/product-form/product-form.component').then(
-  //       (m) => m.ProductFormComponent
-  //     ),
-  //   resolve: { product: productResolver },
-  //   canDeactivate: [unsavedChangesGuard],
-  // },
+  {
+    path: 'add',
+    loadComponent: () =>
+      import('./components/product-form/product-form').then((m) => m.ProductForm),
+    // canDeactivate: [unsavedChangesGuard],
+  },
+  {
+    path: 'edit/:id',
+    loadComponent: () =>
+      import('./components/product-form/product-form').then((m) => m.ProductForm),
+    // resolve: { product: productResolver },
+    // canDeactivate: [unsavedChangesGuard],
+  },
 ];

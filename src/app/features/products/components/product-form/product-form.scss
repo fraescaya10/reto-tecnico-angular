@@ -1,0 +1,80 @@
+.product-form-container {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 32px 24px;
+}
+
+.header {
+  padding: 20px;
+  border-bottom: 2px solid var(--color-border-dark);
+  h1 {
+    text-align: center;
+  }
+}
+
+.card {
+  background-color: var(--color-bg-surface);
+  height: 500px;
+}
+
+.form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  padding: 30px;
+  width: 100%;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+
+  label {
+    font-weight: bold;
+    font-size: 14px;
+    color: #333;
+  }
+
+  input {
+    width: 100%;
+    padding: 10px 12px;
+    border: 2px solid var(--color-border);
+    border-radius: 4px;
+    color: var(--text-secondary);
+    background: var(--color-bg-surface);
+    transition: border-color 100ms ease;
+
+    &::placeholder {
+      color: var(--text-primary-disabled);
+    }
+
+    &:focus {
+      outline: none;
+      border: 2px solid var(--color-border-focus);
+    }
+
+    &[aria-invalid='true'] {
+      border-color: var(--color-error);
+      &:focus {
+        box-shadow: 0 0 0 3px rgb(239 68 68 / 0.15);
+      }
+    }
+
+    &:disabled {
+      color: var(--text-primary-disabled);
+      cursor: not-allowed;
+    }
+  }
+
+  &:has(input:disabled) label {
+    color: var(--text-primary-disabled);
+  }
+}
+
+.form-buttons {
+  padding: 20px 0;
+  display: flex;
+  gap: 60px;
+  justify-content: center;
+}

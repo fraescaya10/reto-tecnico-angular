@@ -1,0 +1,134 @@
+<div class="product-form-container">
+  <section class="card">
+    <header class="header">
+      <h1>Formulario de Registro</h1>
+    </header>
+    <form
+      class="form"
+      [formGroup]="productForm"
+      (ngSubmit)="onSubmit()"
+      novalidate
+      aria-label="Formulario de Registro"
+    >
+      <div class="form-group">
+        <label for="name">ID</label>
+        <input
+          type="text"
+          id="id"
+          formControlName="id"
+          placeholder="Ingrese id del producto"
+          aria-label="ID"
+          [attr.aria-invalid]="productForm.controls.id.invalid && productForm.controls.id.touched"
+        />
+        @if(productForm.get('id')?.errors && productForm.get('id')?.touched) {
+        <div class="error-message" role="alert">
+          @if (productForm.get('id')?.hasError('required')) {
+          <span>ID no válido</span>
+          } @else if (productForm.get('id')?.hasError('minlength')) {
+          <span>ID debe tener al menos 3 caracteres</span>
+          } @else if (productForm.get('id')?.hasError('maxlength')) {
+          <span>ID debe tener como máximo 10 caracteres</span>
+          }
+        </div>
+        }
+      </div>
+      <div class="form-group">
+        <label for="name">Nombre</label>
+        <input
+          type="text"
+          id="name"
+          formControlName="name"
+          placeholder="Ingrese el nombre del producto"
+          aria-label="Nombre"
+          [attr.aria-invalid]="productForm.controls.name.invalid && productForm.controls.name.touched"
+        />
+        @if(productForm.get('name')?.errors && productForm.get('name')?.touched) {
+        <div class="error-message" role="alert">
+          @if (productForm.get('name')?.hasError('required')) {
+          <span>Este campo es requerido</span>
+          } @else if (productForm.get('name')?.hasError('minlength')) {
+          <span>Nombre debe tener al menos 5 caracteres</span>
+          } @else if (productForm.get('name')?.hasError('maxlength')) {
+          <span>Nombre debe tener como máximo 100 caracteres</span>
+          }
+        </div>
+        }
+      </div>
+      <div class="form-group">
+        <label for="description">Descripción</label>
+        <input
+          type="text"
+          id="description"
+          formControlName="description"
+          placeholder="Ingrese la descripción del producto"
+          aria-label="Descripción"
+          [attr.aria-invalid]="productForm.controls.description.invalid && productForm.controls.description.touched"
+        />
+        @if(productForm.get('description')?.errors && productForm.get('description')?.touched) {
+        <div class="error-message" role="alert">
+          @if (productForm.get('description')?.hasError('required')) {
+          <span>Este campo es requerido</span>
+          } @else if (productForm.get('description')?.hasError('minlength')) {
+          <span>Descripción debe tener al menos 10 caracteres</span>
+          } @else if (productForm.get('description')?.hasError('maxlength')) {
+          <span>Descripción debe tener como máximo 200 caracteres</span>
+          }
+        </div>
+        }
+      </div>
+      <div class="form-group">
+        <label for="logo">Logo</label>
+        <input
+          type="url"
+          id="logo"
+          formControlName="logo"
+          placeholder="https://ejemplo.com/logo.png"
+          aria-label="Logo"
+          [attr.aria-invalid]="productForm.controls.logo.invalid && productForm.controls.logo.touched"
+        />
+        @if(productForm.get('logo')?.errors && productForm.get('logo')?.touched) {
+        <div class="error-message" role="alert">
+          @if (productForm.get('logo')?.hasError('required')) {
+          <span>Este campo es requerido</span>
+          }@else if (productForm.get('logo')?.hasError('invalidUrl')) {
+          <span>Url inválida</span>
+          }
+        </div>
+        }
+      </div>
+      <div class="form-group">
+        <label for="date_release">Fecha liberación</label>
+        <input
+          type="date"
+          id="date_release"
+          formControlName="date_release"
+          aria-label="Fecha liberación"
+          [attr.aria-invalid]="productForm.controls.date_release.invalid && productForm.controls.date_release.touched"
+        />
+        @if(productForm.get('date_release')?.errors && productForm.get('date_release')?.touched) {
+        <div class="error-message" role="alert">
+          @if (productForm.get('date_release')?.hasError('required')) {
+          <span>Este campo es requerido</span>
+          } @else if (productForm.get('date_release')?.hasError('minDateToday')) {
+          <span>Fecha no puede ser menor a la fecha actual</span>
+          }
+        </div>
+        }
+      </div>
+      <div class="form-group">
+        <label for="date_revision">Fecha Revisión</label>
+        <input
+          type="date"
+          id="date_revision"
+          formControlName="date_revision"
+          aria-label="Fecha Revisión"
+          [attr.aria-invalid]="productForm.controls.date_revision.invalid && productForm.controls.date_revision.touched"
+        />
+      </div>
+    </form>
+    <div class="form-buttons">
+      <button type="button" class="secondary-button" (click)="onCancel()">Reiniciar</button>
+      <button type="submit" class="primary-button" [disabled]="productForm.invalid">Enviar</button>
+    </div>
+  </section>
+</div>
