@@ -39,7 +39,7 @@ export class ProductList {
   protected readonly searchControl = new FormControl('', { nonNullable: true });
   readonly loading = signal(false);
   readonly pageSize = signal(5);
-  readonly pageSizeOptions = [5, 10, 15];
+  readonly pageSizeOptions = [5, 10, 20];
   readonly openMenuId = signal<string | null>(null);
   readonly menuPosition = signal<MenuPosition | null>(null);
   readonly menuHeight = 92;
@@ -61,9 +61,10 @@ export class ProductList {
   });
 
   productsCount = computed(() => (this.products() ?? []).length);
+  paginatedProducts = computed(() => this.products().slice(0, this.pageSize()));
 
-  setPageSize(arg0: number) {
-    console.log(arg0);
+  setPageSize(size: number) {
+    this.pageSize.set(size);
   }
 
   openAddForm() {

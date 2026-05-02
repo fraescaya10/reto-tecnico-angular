@@ -38,7 +38,7 @@
               <span>No se encontraron productos</span>
             </td>
           </tr>
-          } @else { @for (product of products(); track product.id) {
+          } @else { @for (product of paginatedProducts(); track product.id) {
           <tr class="table__tr">
             <td class="table__td">
               <div class="product-logo">

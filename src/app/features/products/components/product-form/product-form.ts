@@ -8,7 +8,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ProductService } from '../../services/product.service';
 import { Product } from '../../models/Product';
 
@@ -22,9 +22,13 @@ import { Product } from '../../models/Product';
 export class ProductForm {
   private readonly fb = inject(FormBuilder);
   private readonly router = inject(Router);
+  private readonly route = inject(ActivatedRoute);
   private readonly productService = inject(ProductService);
 
   readonly loading = signal(false);
+  readonly isEditMode = signal(false);
+  private editId: string | null = null;
+  private originalProduct: Product | null = null;
 
   productForm = this.fb.group({
     id: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(10)]],
@@ -36,6 +40,30 @@ export class ProductForm {
   });
 
   constructor() {
+    const id = this.route.snapshot.paramMap.get('id');
+
+    if (id) {
+      this.isEditMode.set(true);
+      this.productForm.controls.id.disable();
+      this.loading.set(true);
+
+      this.productService
+        .getProductById(id)
+        .pipe(takeUntilDestroyed())
+        .subscribe({
+          next: (product) => {
+            this.editId = product.id;
+            this.originalProduct = product;
+            this.productForm.patchValue(product);
+            this.loading.set(false);
+          },
+          error: (errorResponse: HttpErrorResponse) => {
+            console.error(errorResponse.error.message);
+            this.loading.set(false);
+          },
+        });
+    }
+
     this.productForm.controls.date_release.valueChanges
       .pipe(takeUntilDestroyed())
       .subscribe((value) => {
@@ -56,7 +84,12 @@ export class ProductForm {
     const product = this.productForm.getRawValue() as Product;
     this.loading.set(true);
 
-    this.productService.createProduct(product).subscribe({
+    const request$ =
+      this.isEditMode() && this.editId
+        ? this.productService.updateProduct(this.editId, { ...product, id: this.editId })
+        : this.productService.createProduct(product);
+
+    request$.subscribe({
       next: () => {
         this.loading.set(false);
         this.router.navigate(['/products']);
@@ -68,9 +101,14 @@ export class ProductForm {
     });
   }
 
-  onCancel() {
-    console.log('Cancel clicked');
-    this.productForm.reset();
+  onReset() {
+    if (this.isEditMode() && this.originalProduct) {
+      this.productForm.patchValue(this.originalProduct);
+      this.productForm.markAsPristine();
+      this.productForm.markAsUntouched();
+    } else {
+      this.productForm.reset();
+    }
   }
 
   goBack() {

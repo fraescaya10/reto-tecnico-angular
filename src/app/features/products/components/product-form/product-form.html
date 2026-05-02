@@ -135,8 +135,10 @@
         />
       </div>
       <div class="form-buttons">
-        <button type="button" class="secondary-button" (click)="onCancel()">Reiniciar</button>
-        <button type="submit" class="primary-button" [disabled]="productForm.invalid || loading()">Enviar</button>
+        <button type="button" class="secondary-button" (click)="onReset()">Reiniciar</button>
+        <button type="submit" class="primary-button" [disabled]="productForm.invalid || loading()">
+          Enviar
+        </button>
       </div>
     </form>
   </section>
