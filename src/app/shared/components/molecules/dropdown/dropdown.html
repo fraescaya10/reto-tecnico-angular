@@ -1,0 +1,20 @@
+<button
+  #triggerBtn
+  class="actions-btn"
+  type="button"
+  (click)="toggle($event)"
+>
+  <fa-icon [icon]="icon()"></fa-icon>
+</button>
+
+@if (isOpen() && menuPosition()) {
+  <div
+    class="dropdown-menu"
+    [class.dropdown-menu--above]="menuPosition()?.placement === 'above'"
+    [style.top.px]="menuPosition()?.top"
+    [style.left.px]="menuPosition()?.left"
+    (click)="close(); $event.stopPropagation()"
+  >
+    <ng-content></ng-content>
+  </div>
+}

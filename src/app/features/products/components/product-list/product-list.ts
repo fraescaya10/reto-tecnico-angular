@@ -2,7 +2,6 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
-  HostListener,
   inject,
   signal,
 } from '@angular/core';
@@ -29,15 +28,14 @@ import { Product } from '../../models/Product';
 import { ConfirmDialogService } from '../../../../shared/services/confirm-dialog.service';
 import { NotificationService } from '../../../../shared/services/notification.service';
 
-interface MenuPosition {
-  top: number;
-  left: number;
-  placement: 'below' | 'above';
-}
+import { Button } from '../../../../shared/components/atoms/button/button';
+import { Input } from '../../../../shared/components/atoms/input/input';
+import { Dropdown } from '../../../../shared/components/molecules/dropdown/dropdown';
+import { DropdownItem } from '../../../../shared/components/molecules/dropdown-item/dropdown-item';
 
 @Component({
   selector: 'app-product-list',
-  imports: [ReactiveFormsModule, FontAwesomeModule],
+  imports: [ReactiveFormsModule, FontAwesomeModule, Button, Input, Dropdown, DropdownItem],
   templateUrl: './product-list.html',
   styleUrl: './product-list.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -58,9 +56,6 @@ export class ProductList {
   readonly loading = signal(false);
   readonly pageSize = signal(5);
   readonly pageSizeOptions = [5, 10, 20];
-  readonly openMenuId = signal<string | null>(null);
-  readonly menuPosition = signal<MenuPosition | null>(null);
-  readonly menuHeight = 92;
 
   products$: Observable<Product[]> = combineLatest([
     this.searchControl.valueChanges.pipe(startWith(''), debounceTime(300), distinctUntilChanged()),
@@ -96,46 +91,11 @@ export class ProductList {
     this.router.navigate(['/products/add']);
   }
 
-  toggleMenu(id: string, event: MouseEvent) {
-    if (this.openMenuId() === id) {
-      this.closeMenu();
-      return;
-    }
-
-    this.openMenuId.set(id);
-    const rect = (event.currentTarget as HTMLElement).getBoundingClientRect();
-    const viewportHeight = window.innerHeight;
-    const spaceBelow = viewportHeight - rect.bottom;
-    const placement: 'below' | 'above' = spaceBelow < this.menuHeight ? 'above' : 'below';
-
-    this.menuPosition.set({
-      top: placement === 'below' ? rect.bottom + 4 : rect.top - this.menuHeight - 4,
-      left: rect.left - 100,
-      placement,
-    });
-  }
-
-  closeMenu() {
-    this.openMenuId.set(null);
-    this.menuPosition.set(null);
-  }
-
-  @HostListener('document:click', ['$event'])
-  onDocumentClick(event: MouseEvent) {
-    const target = event.target as Element | null;
-    const clickedInside = target?.closest('.actions-cell');
-    if (!clickedInside) {
-      this.closeMenu();
-    }
-  }
-
   openEditForm(id: string) {
-    this.closeMenu();
     this.router.navigate(['/products/edit', id]);
   }
 
   deleteProduct(id: string, productName: string) {
-    this.closeMenu();
     this.confirmDialogService.open({
       title: 'Eliminar producto',
       message: `¿Estás seguro de eliminar el producto "${productName}"?`,

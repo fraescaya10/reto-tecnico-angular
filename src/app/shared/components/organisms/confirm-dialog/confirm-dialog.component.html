@@ -8,12 +8,12 @@
       <p class="dialog-card__message">{{ config.message }}</p>
     </div>
     <div class="dialog-card__actions">
-      <button class="secondary-button" type="button" (click)="dialogService.cancel()">
+      <app-button variant="secondary" (click)="dialogService.cancel()">
         {{ config.cancelLabel || 'Cancelar' }}
-      </button>
-      <button class="primary-button" type="button" (click)="dialogService.confirm()">
+      </app-button>
+      <app-button variant="primary" (click)="dialogService.confirm()">
         {{ config.confirmLabel || 'Confirmar' }}
-      </button>
+      </app-button>
     </div>
   </div>
 </div>

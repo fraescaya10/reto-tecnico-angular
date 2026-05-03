@@ -29,26 +29,7 @@
     }
   }
 
-  &__search-input {
-    width: 100%;
-    padding: var(--space-3) var(--space-3);
-    border: var(--border-width) solid var(--color-border);
-    border-radius: var(--radius-md);
-    color: var(--text-secondary);
-    background: var(--color-bg-surface);
-    transition: border-color var(--transition-fast);
-
-    &::placeholder {
-      color: var(--text-primary-disabled);
-    }
-
-    &:focus {
-      outline: none;
-      border: var(--border-width) solid var(--color-border-focus);
-    }
-  }
-
-  .primary-button {
+  app-button {
     width: 100%;
 
     @media (min-width: 480px) {

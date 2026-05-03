@@ -1,17 +1,17 @@
 <div class="product-list-container">
   <header class="header">
     <div class="header__search">
-      <input
-        id="search-input"
+      <app-input
         type="search"
-        class="header__search-input form-control"
-        placeholder="Search…"
+        id="search"
         [formControl]="searchControl"
+        placeholder="Search…"
         autocomplete="off"
-        aria-label="Buscar producto"
-      />
+        ariaLabel="Buscar producto"
+        radius="md"
+      ></app-input>
     </div>
-    <button class="primary-button" (click)="openAddForm()">Agregar</button>
+    <app-button variant="primary" (click)="openAddForm()">Agregar</app-button>
   </header>
   <section class="card">
     <div class="table-container">
@@ -58,37 +58,17 @@
             <td class="table__td">{{ product.date_revision }}</td>
             <td class="table__td table__td--actions">
               <div class="actions-cell">
-                <button
-                  class="actions-btn"
-                  type="button"
-                  aria-label="Acciones"
-                  (click)="toggleMenu(product.id, $event)"
-                >
-                  <fa-icon [icon]="ellipsisVertical"></fa-icon>
-                </button>
+                <app-dropdown [icon]="ellipsisVertical">
+                  <app-dropdown-item (click)="openEditForm(product.id)">
+                    <fa-icon [icon]="pencil"></fa-icon>
+                    Editar
+                  </app-dropdown-item>
+                  <app-dropdown-item variant="danger" (click)="deleteProduct(product.id, product.name)">
+                    <fa-icon [icon]="trash"></fa-icon>
+                    Eliminar
+                  </app-dropdown-item>
+                </app-dropdown>
               </div>
-              @if (openMenuId() === product.id && menuPosition()) {
-              <div
-                class="dropdown-menu"
-                [class.dropdown-menu--above]="menuPosition()?.placement === 'above'"
-                [style.top.px]="menuPosition()?.top"
-                [style.left.px]="menuPosition()?.left"
-                (click)="$event.stopPropagation()"
-              >
-                <button class="dropdown-item" type="button" (click)="openEditForm(product.id)">
-                  <fa-icon [icon]="pencil"></fa-icon>
-                  Editar
-                </button>
-                <button
-                  class="dropdown-item dropdown-item--danger"
-                  type="button"
-                  (click)="deleteProduct(product.id, product.name)"
-                >
-                  <fa-icon [icon]="trash"></fa-icon>
-                  Eliminar
-                </button>
-              </div>
-              }
             </td>
           </tr>
           } }

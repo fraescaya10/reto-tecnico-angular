@@ -1,0 +1,15 @@
+<button
+  [type]="type()"
+  [disabled]="disabled() || loading()"
+  [ngClass]="computedClasses"
+  class="btn"
+>
+  @if (loading()) {
+    <span class="btn__spinner"></span>
+  } @else {
+    @if (icon()) {
+      <fa-icon [icon]="icon()!" class="btn__icon"></fa-icon>
+    }
+    <ng-content></ng-content>
+  }
+</button>

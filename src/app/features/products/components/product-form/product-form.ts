@@ -11,10 +11,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ProductService } from '../../services/product.service';
 import { Product } from '../../models/Product';
 import { NotificationService } from '../../../../shared/services/notification.service';
+import { Button } from '../../../../shared/components/atoms/button/button';
+import { Input } from '../../../../shared/components/atoms/input/input';
+import { FormError } from '../../../../shared/components/atoms/form-error/form-error';
 
 @Component({
   selector: 'app-product-form',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, Button, Input, FormError],
   templateUrl: './product-form.html',
   styleUrl: './product-form.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
