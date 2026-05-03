@@ -130,7 +130,6 @@ describe('ProductList', () => {
       component.deleteProduct('trj-cre', 'Tarjeta de Crédito');
       expect(confirmDialogServiceMock.open).toHaveBeenCalledWith(
         expect.objectContaining({
-          title: 'Eliminar producto',
           message: '¿Estás seguro de eliminar el producto "Tarjeta de Crédito"?',
           confirmLabel: 'Eliminar',
         }),

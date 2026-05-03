@@ -1,11 +1,12 @@
 import { Injectable, signal } from '@angular/core';
 
 export interface DialogConfig {
-  title: string;
+  title?: string;
   message: string;
   confirmLabel?: string;
   cancelLabel?: string;
   onConfirm: () => void;
+  onCancel?: () => void;
 }
 
 @Injectable({ providedIn: 'root' })
@@ -23,6 +24,8 @@ export class ConfirmDialogService {
   }
 
   cancel(): void {
+    const config = this._config();
+    config?.onCancel?.();
     this._config.set(null);
   }
 }

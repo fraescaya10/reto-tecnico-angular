@@ -40,13 +40,13 @@ describe('ConfirmDialogComponent', () => {
     expect(msg.textContent.trim()).toBe('¿Deseas continuar?');
   });
 
-  it('should hide title when title is "Eliminar producto"', () => {
-    dialogService.open({ title: 'Eliminar producto', message: 'M', onConfirm: vi.fn() });
+  it('should not render title when no title is provided', () => {
+    dialogService.open({ message: 'M', onConfirm: vi.fn() });
     fixture.detectChanges();
     expect(fixture.nativeElement.querySelector('.dialog-card__title')).toBeNull();
   });
 
-  it('should show title when it is not "Eliminar producto"', () => {
+  it('should show title when provided', () => {
     dialogService.open({ title: 'Confirmar acción', message: 'M', onConfirm: vi.fn() });
     fixture.detectChanges();
     const title = fixture.nativeElement.querySelector('.dialog-card__title');

@@ -8,12 +8,14 @@ import {
   Validators,
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Observable, Subject } from 'rxjs';
 import { ProductService } from '../../services/product.service';
 import { Product } from '../../models/Product';
 import { NotificationService } from '../../../../shared/services/notification.service';
 import { Button } from '../../../../shared/components/atoms/button/button';
 import { Input } from '../../../../shared/components/atoms/input/input';
 import { FormError } from '../../../../shared/components/atoms/form-error/form-error';
+import { ConfirmDialogService } from '../../../../shared/services/confirm-dialog.service';
 
 @Component({
   selector: 'app-product-form',
@@ -28,11 +30,13 @@ export class ProductForm {
   private readonly route = inject(ActivatedRoute);
   private readonly productService = inject(ProductService);
   private readonly notificationService = inject(NotificationService);
+  private readonly confirmDialogService = inject(ConfirmDialogService);
 
   readonly loading = signal(false);
   readonly isEditMode = signal(false);
   private editId: string | null = null;
   private originalProduct: Product | null = null;
+  private submitted = false;
 
   productForm = this.fb.group({
     id: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(10)]],
@@ -95,7 +99,10 @@ export class ProductForm {
     request$.subscribe({
       next: () => {
         this.loading.set(false);
-        const msg = this.isEditMode() ? 'Producto actualizado correctamente' : 'Producto creado correctamente';
+        this.submitted = true;
+        const msg = this.isEditMode()
+          ? 'Producto actualizado correctamente'
+          : 'Producto creado correctamente';
         this.notificationService.show(msg, 'success');
         this.router.navigate(['/products']);
       },
@@ -117,6 +124,29 @@ export class ProductForm {
 
   goBack() {
     this.router.navigate(['/products']);
+  }
+
+  canDeactivate(): boolean | Observable<boolean> {
+    if (this.productForm.pristine || this.submitted) return true;
+
+    const result$ = new Subject<boolean>();
+
+    this.confirmDialogService.open({
+      title: 'Cambios sin guardar',
+      message: 'Tienes cambios sin guardar. ¿Seguro que deseas salir?',
+      confirmLabel: 'Sí',
+      cancelLabel: 'No',
+      onConfirm: () => {
+        result$.next(true);
+        result$.complete();
+      },
+      onCancel: () => {
+        result$.next(false);
+        result$.complete();
+      },
+    });
+
+    return result$.asObservable();
   }
 
   private urlValidator(control: AbstractControl): ValidationErrors | null {

@@ -91,7 +91,6 @@ export class ProductList {
 
   deleteProduct(id: string, productName: string) {
     this.confirmDialogService.open({
-      title: 'Eliminar producto',
       message: `¿Estás seguro de eliminar el producto "${productName}"?`,
       confirmLabel: 'Eliminar',
       onConfirm: () => {
