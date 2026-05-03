@@ -1,10 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  computed,
-  inject,
-  signal,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -53,7 +47,7 @@ export class ProductList {
   protected readonly trash = faTrash;
 
   protected readonly searchControl = new FormControl('', { nonNullable: true });
-  readonly loading = signal(false);
+  readonly loading = signal(true);
   readonly pageSize = signal(5);
   readonly pageSizeOptions = [5, 10, 20];
 
