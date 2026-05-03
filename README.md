@@ -1,59 +1,81 @@
-# RetoTecnicoAngular
+# Reto Técnico Angular
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.1.4.
+Aplicación de gestión de productos financieros construida con Angular 21.
 
-## Development server
+## Requisitos previos
 
-To start a local development server, run:
+- Node.js 18 o superior
+- Angular CLI (`npm install -g @angular/cli`)
+
+## Instalación
+
+```bash
+npm install
+```
+
+## Ejecutar el proyecto
+
+### Modo desarrollo
 
 ```bash
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Abre el navegador en `http://localhost:4200/`. La aplicación se recarga automáticamente al modificar archivos fuente.
 
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
+### Modo producción (build)
 
 ```bash
 ng build
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+Los archivos compilados se generan en el directorio `dist/`. El build de producción aplica optimizaciones de rendimiento automáticamente.
 
-## Running unit tests
+Para compilar en modo desarrollo:
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+```bash
+ng build --configuration=development
+```
+
+## Environments
+
+El proyecto tiene dos ambientes configurados:
+
+| Ambiente | Archivo | API URL |
+|---|---|---|
+| Producción | `src/environments/environment.ts` | Configura tu URL de producción aquí |
+| Desarrollo | `src/environments/environment.development.ts` | `http://localhost:3002/bp/products` |
+
+## Ejecutar los tests
 
 ```bash
 ng test
 ```
 
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
+Para ver el reporte de cobertura:
 
 ```bash
-ng e2e
+ng test --coverage
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+## Configuración del backend
 
-## Additional Resources
+El backend debe tener habilitado CORS para que el frontend pueda comunicarse con él. De lo contrario, el navegador bloqueará las peticiones.
+Para ello instalamos CORS con los comandos:
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+```bash
+npm install cors
+npm install @types/cors
+```
+
+Luego en la linea `8` del archivo `main.ts` habilitamos CORS, descomentando la linea, debe quedar asi
+```js
+const app = createExpressServer({
+  cors: true,
+  routePrefix: "/bp", 
+
+  controllers: [
+    __dirname + "/controllers/*{.js,.ts}",
+  ], // we specify controllers we want to use
+});
+```

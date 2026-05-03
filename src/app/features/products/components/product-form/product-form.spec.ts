@@ -2,10 +2,11 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute, Router } from '@angular/router';
 import { provideRouter } from '@angular/router';
-import { of, throwError } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { Product } from '../../models/Product';
 import { ProductService } from '../../services/product.service';
+import { ConfirmDialogService } from '../../../../shared/services/confirm-dialog.service';
 import { ProductForm } from './product-form';
 
 const mockProduct: Product = {
@@ -210,6 +211,66 @@ describe('ProductForm', () => {
       expect(component.productForm.pristine).toBe(true);
       expect(component.productForm.untouched).toBe(true);
     });
+  });
+
+  describe('canDeactivate', () => {
+    let component: ProductForm;
+    let fixture: ComponentFixture<ProductForm>;
+    let confirmDialogService: ConfirmDialogService;
+    let router: Router;
+
+    beforeEach(async () => {
+      const serviceMock = buildServiceMock();
+
+      await TestBed.configureTestingModule({
+        imports: [ProductForm],
+        providers: buildProviders(null, serviceMock),
+      }).compileComponents();
+
+      router = TestBed.inject(Router);
+      vi.spyOn(router, 'navigate').mockResolvedValue(true);
+      fixture = TestBed.createComponent(ProductForm);
+      component = fixture.componentInstance;
+      confirmDialogService = TestBed.inject(ConfirmDialogService);
+      fixture.detectChanges();
+      await fixture.whenStable();
+    });
+
+    it('should return true when form is pristine', () => {
+      expect(component.canDeactivate()).toBe(true);
+    });
+
+    it('should return true after a successful submit', () => {
+      component.productForm.setValue(validFormValue);
+      component.onSubmit();
+      expect(component.canDeactivate()).toBe(true);
+    });
+
+    it('should return an Observable when form is dirty and not submitted', () => {
+      component.productForm.markAsDirty();
+      const result = component.canDeactivate();
+      expect(result).toBeInstanceOf(Observable);
+    });
+
+    it('observable should emit true when user confirms', () =>
+      new Promise<void>((resolve) => {
+        component.productForm.markAsDirty();
+        (component.canDeactivate() as Observable<boolean>).subscribe((value) => {
+          expect(value).toBe(true);
+          resolve();
+        });
+        confirmDialogService.confirm();
+      }));
+
+    it('observable should emit false when user cancels', () =>
+      new Promise<void>((resolve) => {
+        component.productForm.markAsDirty();
+        (component.canDeactivate() as Observable<boolean>).subscribe((value) => {
+          expect(value).toBe(false);
+          resolve();
+        });
+        confirmDialogService.cancel();
+      }));
   });
 
   describe('Edit mode — getProductById error', () => {
