@@ -1,0 +1,52 @@
+.actions-btn {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+  transition: background-color var(--transition-fast);
+  font-size: 1rem;
+
+  &:hover {
+    background-color: var(--color-border);
+  }
+}
+
+.dropdown-menu {
+  position: fixed;
+  z-index: 1000;
+  min-width: 130px;
+  background: var(--color-bg-surface);
+  border: var(--border-width-thin) solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  animation: menu-appear var(--transition-fast) forwards;
+}
+
+.dropdown-menu--above {
+  animation: menu-appear-above var(--transition-fast) forwards;
+}
+
+@keyframes menu-appear {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes menu-appear-above {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

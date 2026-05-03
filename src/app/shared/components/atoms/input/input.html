@@ -1,0 +1,14 @@
+<input
+  [type]="type()"
+  [placeholder]="placeholder()"
+  [value]="value()"
+  [disabled]="disabled()"
+  [attr.id]="id() ? id() : null"
+  [attr.aria-invalid]="hasError() ? 'true' : null"
+  [attr.aria-label]="ariaLabel() || null"
+  [attr.autocomplete]="autocomplete() || null"
+  class="form-control"
+  [class.form-control--md]="radius() === 'md'"
+  (input)="onInput($event)"
+  (blur)="onTouched()"
+/>

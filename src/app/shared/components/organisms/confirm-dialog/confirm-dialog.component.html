@@ -1,0 +1,20 @@
+@if (dialogService.config(); as config) {
+<div class="dialog-overlay" role="dialog" aria-modal="true" [attr.aria-label]="config.title" (click)="dialogService.cancel()">
+  <div class="dialog-card" (click)="$event.stopPropagation()">
+    <div class="dialog-card__content">
+      @if (config.title) {
+        <h2 class="dialog-card__title">{{ config.title }}</h2>
+      }
+      <p class="dialog-card__message">{{ config.message }}</p>
+    </div>
+    <div class="dialog-card__actions">
+      <app-button variant="secondary" (click)="dialogService.cancel()">
+        {{ config.cancelLabel || 'Cancelar' }}
+      </app-button>
+      <app-button variant="primary" (click)="dialogService.confirm()">
+        {{ config.confirmLabel || 'Confirmar' }}
+      </app-button>
+    </div>
+  </div>
+</div>
+}

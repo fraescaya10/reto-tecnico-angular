@@ -1,0 +1,72 @@
+.dialog-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1100;
+  animation: overlay-in var(--transition-fast) ease-out;
+}
+
+.dialog-card {
+  background: var(--color-bg-surface);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  width: 100%;
+  max-width: 480px;
+  margin: var(--space-4);
+  overflow: hidden;
+  animation: card-in var(--transition-fast) ease-out;
+
+  &__content {
+    padding: 60px 40px;
+  }
+
+  &__title {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-form-control);
+    margin: 0 0 var(--space-3);
+  }
+
+  &__message {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-medium);
+    color: var(--text-form-control);
+    margin: 0;
+    line-height: var(--line-height-normal);
+  }
+
+  &__actions {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-4);
+    padding: var(--space-4) var(--space-5);
+    border-top: var(--border-width-thin) solid var(--color-border);
+
+    button {
+      flex: 1;
+    }
+  }
+}
+
+@keyframes overlay-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes card-in {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

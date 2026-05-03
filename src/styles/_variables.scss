@@ -1,0 +1,99 @@
+:root {
+  /* Colors — Brand */
+  --color-primary: #ffdd00;
+  --color-primary-disabled: #fff199;
+
+  /* Colors — Backgrounds */
+  --color-bg-body: #f9fafc;
+  --color-bg-surface: #ffffff;
+  --bg-page: var(--color-bg-body);
+
+  /* Colors — Borders */
+  --color-border: #e2e8f0;
+  --color-border-dark: #b7b7b9;
+  --color-border-focus: #2f7abf;
+
+  /* Colors — Text */
+  --text-primary: #0f265c;
+  --text-secondary: #6c757d;
+  --text-primary-disabled: #9fa8be;
+  --text-form-control: #495057;
+
+  /* Colors — Feedback */
+  --color-error: #e66a6a;
+  --color-success: #28a745;
+
+  /* Colors — Gray */
+  --color-gray-100: #f4f6f9;
+  --color-gray-200: #e9ecf3;
+  --color-gray-300: #dee3ed;
+
+  /* Typography — Family */
+  --font-family-base: 'Helvetica Neue', 'Arial', sans-serif;
+
+  /* Typography — Size */
+  --font-size-xs: 11px;
+  --font-size-sm: 13px;
+  --font-size-base: 14px;
+  --font-size-md: 15px;
+  --font-size-lg: 16px;
+  --font-size-xl: 18px;
+  --font-size-2xl: 20px;
+  --font-size-3xl: 24px;
+  --font-size-4xl: 28px;
+
+  /* Typography — Weight */
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  /* Typography — Line Height */
+  --line-height-tight: 1.25;
+  --line-height-normal: 1.5;
+  --line-height-loose: 1.75;
+
+  /* Spacing */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-7: 30px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-15: 60px;
+
+  /* Border */
+  --border-width: 2px;
+  --border-width-thin: 1px;
+
+  /* Border Radius */
+  --radius-xs: 3px;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-full: 50%;
+
+  /* Transitions */
+  --transition-fast: 100ms ease;
+
+  /* Breakpoints */
+  --bp-sm: 480px;
+  --bp-md: 768px;
+  --bp-lg: 1024px;
+
+  /* Shadows */
+  --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.15);
+  --shadow-error-focus: 0 0 0 3px color-mix(in srgb, var(--color-error) 15%, transparent);
+
+  /* Colors — Danger */
+  --color-danger-500: #dc3545;
+  --color-danger-50: rgba(220, 53, 69, 0.1);
+
+  /* Colors — Error, Success & Info Backgrounds */
+  --color-error-50: rgba(220, 53, 69, 0.4);
+  --color-success-50: rgba(40, 167, 69, 0.4);
+  --color-info-50: rgba(47, 122, 191, 0.4);
+}

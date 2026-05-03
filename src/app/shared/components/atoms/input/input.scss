@@ -1,0 +1,40 @@
+:host {
+  display: block;
+  width: 100%;
+}
+
+.form-control {
+  width: 100%;
+  padding: var(--space-3);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+  background: var(--color-bg-surface);
+  transition: border-color var(--transition-fast);
+
+  &::placeholder {
+    color: var(--text-primary-disabled);
+  }
+
+  &:focus {
+    outline: none;
+    border-color: var(--color-border-focus);
+  }
+
+  &[aria-invalid='true'] {
+    border-color: var(--color-error);
+
+    &:focus {
+      box-shadow: var(--shadow-error-focus);
+    }
+  }
+
+  &:disabled {
+    color: var(--text-primary-disabled);
+    cursor: not-allowed;
+  }
+
+  &--md {
+    border-radius: var(--radius-md);
+  }
+}
