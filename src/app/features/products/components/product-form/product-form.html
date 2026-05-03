@@ -4,7 +4,7 @@
       <a class="back-link" (click)="goBack()" aria-label="Volver a la lista de productos">
         ← Volver
       </a>
-      <h1>Formulario de Registro</h1>
+      <h1>{{ isEditMode() ? 'Editar Producto' : 'Formulario de Registro' }}</h1>
     </header>
     <form
       class="form"
@@ -22,15 +22,14 @@
           placeholder="Ingrese id del producto"
           [hasError]="productForm.controls.id.invalid && productForm.controls.id.touched"
         ></app-input>
-        @if(productForm.get('id')?.errors && productForm.get('id')?.touched) {
-          @if (productForm.get('id')?.hasError('required')) {
-          <app-form-error message="ID no válido"></app-form-error>
-          } @else if (productForm.get('id')?.hasError('minlength')) {
-          <app-form-error message="ID debe tener al menos 3 caracteres"></app-form-error>
-          } @else if (productForm.get('id')?.hasError('maxlength')) {
-          <app-form-error message="ID debe tener como máximo 10 caracteres"></app-form-error>
-          }
-        }
+        @if(productForm.get('id')?.errors && productForm.get('id')?.touched) { @if
+        (productForm.get('id')?.hasError('required')) {
+        <app-form-error message="ID no válido!"></app-form-error>
+        } @else if (productForm.get('id')?.hasError('minlength')) {
+        <app-form-error message="ID debe tener al menos 3 caracteres!"></app-form-error>
+        } @else if (productForm.get('id')?.hasError('maxlength')) {
+        <app-form-error message="ID debe tener como máximo 10 caracteres!"></app-form-error>
+        } }
       </div>
       <div class="form-group">
         <label for="name">Nombre</label>
@@ -41,15 +40,14 @@
           placeholder="Ingrese el nombre del producto"
           [hasError]="productForm.controls.name.invalid && productForm.controls.name.touched"
         ></app-input>
-        @if(productForm.get('name')?.errors && productForm.get('name')?.touched) {
-          @if (productForm.get('name')?.hasError('required')) {
-          <app-form-error message="Este campo es requerido"></app-form-error>
-          } @else if (productForm.get('name')?.hasError('minlength')) {
-          <app-form-error message="Nombre debe tener al menos 5 caracteres"></app-form-error>
-          } @else if (productForm.get('name')?.hasError('maxlength')) {
-          <app-form-error message="Nombre debe tener como máximo 100 caracteres"></app-form-error>
-          }
-        }
+        @if(productForm.get('name')?.errors && productForm.get('name')?.touched) { @if
+        (productForm.get('name')?.hasError('required')) {
+        <app-form-error message="Este campo es requerido!"></app-form-error>
+        } @else if (productForm.get('name')?.hasError('minlength')) {
+        <app-form-error message="Nombre debe tener al menos 5 caracteres!"></app-form-error>
+        } @else if (productForm.get('name')?.hasError('maxlength')) {
+        <app-form-error message="Nombre debe tener como máximo 100 caracteres!"></app-form-error>
+        } }
       </div>
       <div class="form-group">
         <label for="description">Descripción</label>
@@ -60,15 +58,15 @@
           placeholder="Ingrese la descripción del producto"
           [hasError]="productForm.controls.description.invalid && productForm.controls.description.touched"
         ></app-input>
-        @if(productForm.get('description')?.errors && productForm.get('description')?.touched) {
-          @if (productForm.get('description')?.hasError('required')) {
-          <app-form-error message="Este campo es requerido"></app-form-error>
-          } @else if (productForm.get('description')?.hasError('minlength')) {
-          <app-form-error message="Descripción debe tener al menos 10 caracteres"></app-form-error>
-          } @else if (productForm.get('description')?.hasError('maxlength')) {
-          <app-form-error message="Descripción debe tener como máximo 200 caracteres"></app-form-error>
-          }
-        }
+        @if(productForm.get('description')?.errors && productForm.get('description')?.touched) { @if
+        (productForm.get('description')?.hasError('required')) {
+        <app-form-error message="Este campo es requerido!"></app-form-error>
+        } @else if (productForm.get('description')?.hasError('minlength')) {
+        <app-form-error message="Descripción debe tener al menos 10 caracteres!"></app-form-error>
+        } @else if (productForm.get('description')?.hasError('maxlength')) {
+        <app-form-error message="Descripción debe tener como máximo 200 caracteres!">
+        </app-form-error>
+        } }
       </div>
       <div class="form-group">
         <label for="logo">Logo</label>
@@ -79,13 +77,12 @@
           placeholder="https://ejemplo.com/logo.png"
           [hasError]="productForm.controls.logo.invalid && productForm.controls.logo.touched"
         ></app-input>
-        @if(productForm.get('logo')?.errors && productForm.get('logo')?.touched) {
-          @if (productForm.get('logo')?.hasError('required')) {
-          <app-form-error message="Este campo es requerido"></app-form-error>
-          }@else if (productForm.get('logo')?.hasError('invalidUrl')) {
-          <app-form-error message="Url inválida"></app-form-error>
-          }
-        }
+        @if(productForm.get('logo')?.errors && productForm.get('logo')?.touched) { @if
+        (productForm.get('logo')?.hasError('required')) {
+        <app-form-error message="Este campo es requerido!"></app-form-error>
+        } @else if (productForm.get('logo')?.hasError('invalidUrl')) {
+        <app-form-error message="Url inválida!"></app-form-error>
+        } }
       </div>
       <div class="form-group">
         <label for="date_release">Fecha Liberación</label>
@@ -96,12 +93,11 @@
           [hasError]="productForm.controls.date_release.invalid && productForm.controls.date_release.touched"
         ></app-input>
         @if(productForm.get('date_release')?.errors && productForm.get('date_release')?.touched) {
-          @if (productForm.get('date_release')?.hasError('required')) {
-          <app-form-error message="Este campo es requerido"></app-form-error>
-          } @else if (productForm.get('date_release')?.hasError('minDateToday')) {
-          <app-form-error message="Fecha no puede ser menor a la fecha actual"></app-form-error>
-          }
-        }
+        @if (productForm.get('date_release')?.hasError('required')) {
+        <app-form-error message="Este campo es requerido!"></app-form-error>
+        } @else if (productForm.get('date_release')?.hasError('minDateToday')) {
+        <app-form-error message="Fecha no puede ser menor a la fecha actual!"></app-form-error>
+        } }
       </div>
       <div class="form-group">
         <label for="date_revision">Fecha Revisión</label>
@@ -114,7 +110,12 @@
       </div>
       <div class="form-buttons">
         <app-button variant="secondary" (click)="onReset()">Reiniciar</app-button>
-        <app-button type="submit" variant="primary" [disabled]="productForm.invalid || loading()" [loading]="loading()">
+        <app-button
+          type="submit"
+          variant="primary"
+          [disabled]="productForm.invalid || loading()"
+          [loading]="loading()"
+        >
           Enviar
         </app-button>
       </div>

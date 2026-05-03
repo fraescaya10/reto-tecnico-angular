@@ -113,4 +113,15 @@ describe('ProductService', () => {
       req.flush(mockProducts[0]);
     });
   });
+
+  describe('deleteProduct', () => {
+    it('should DELETE the product by id', () => {
+      let completed = false;
+      service.deleteProduct('trj-cre').subscribe({ complete: () => (completed = true) });
+      const req = httpMock.expectOne(`${API_URL}/trj-cre`);
+      expect(req.request.method).toBe('DELETE');
+      req.flush(null);
+      expect(completed).toBe(true);
+    });
+  });
 });

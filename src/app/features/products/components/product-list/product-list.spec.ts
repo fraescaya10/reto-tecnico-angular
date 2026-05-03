@@ -5,6 +5,8 @@ import { of } from 'rxjs';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { Product } from '../../models/Product';
 import { ProductService } from '../../services/product.service';
+import { ConfirmDialogService } from '../../../../shared/services/confirm-dialog.service';
+import { NotificationService } from '../../../../shared/services/notification.service';
 import { ProductList } from './product-list';
 
 const mockProducts: Product[] = [
@@ -29,6 +31,15 @@ const mockProducts: Product[] = [
 const productServiceMock = {
   getProducts: vi.fn().mockReturnValue(of(mockProducts)),
   searchProducts: vi.fn().mockReturnValue(of([])),
+  deleteProduct: vi.fn().mockReturnValue(of(void 0)),
+};
+
+const confirmDialogServiceMock = {
+  open: vi.fn(),
+};
+
+const notificationServiceMock = {
+  show: vi.fn(),
 };
 
 describe('ProductList', () => {
@@ -40,12 +51,16 @@ describe('ProductList', () => {
     vi.useFakeTimers();
     productServiceMock.getProducts.mockReturnValue(of(mockProducts));
     productServiceMock.searchProducts.mockReturnValue(of([]));
+    confirmDialogServiceMock.open.mockReset();
+    notificationServiceMock.show.mockReset();
 
     await TestBed.configureTestingModule({
       imports: [ProductList],
       providers: [
         provideRouter([]),
         { provide: ProductService, useValue: productServiceMock },
+        { provide: ConfirmDialogService, useValue: confirmDialogServiceMock },
+        { provide: NotificationService, useValue: notificationServiceMock },
       ],
     }).compileComponents();
 
@@ -108,86 +123,30 @@ describe('ProductList', () => {
       component.openEditForm('trj-cre');
       expect(navSpy).toHaveBeenCalledWith(['/products/edit', 'trj-cre']);
     });
-
-    it('should close the menu', () => {
-      component.openMenuId.set('trj-cre');
-      component.openEditForm('trj-cre');
-      expect(component.openMenuId()).toBeNull();
-    });
-  });
-
-  describe('closeMenu', () => {
-    it('should set openMenuId to null', () => {
-      component.openMenuId.set('trj-cre');
-      component.closeMenu();
-      expect(component.openMenuId()).toBeNull();
-    });
-
-    it('should set menuPosition to null', () => {
-      component.menuPosition.set({ top: 100, left: 200, placement: 'below' });
-      component.closeMenu();
-      expect(component.menuPosition()).toBeNull();
-    });
-  });
-
-  describe('toggleMenu', () => {
-    const mockEvent = (bottom = 100, top = 80) =>
-      ({
-        currentTarget: {
-          getBoundingClientRect: () => ({ bottom, top, left: 200 }),
-        },
-      }) as unknown as MouseEvent;
-
-    it('should open menu for a new id', () => {
-      component.toggleMenu('trj-cre', mockEvent());
-      expect(component.openMenuId()).toBe('trj-cre');
-      expect(component.menuPosition()).not.toBeNull();
-    });
-
-    it('should close menu when the same id is toggled again', () => {
-      component.openMenuId.set('trj-cre');
-      component.toggleMenu('trj-cre', mockEvent());
-      expect(component.openMenuId()).toBeNull();
-    });
-
-    it('should set placement to above when space below is insufficient', () => {
-      vi.spyOn(window, 'innerHeight', 'get').mockReturnValue(100);
-      component.toggleMenu('trj-cre', mockEvent(95, 80));
-      expect(component.menuPosition()?.placement).toBe('above');
-    });
-
-    it('should set placement to below when there is enough space', () => {
-      vi.spyOn(window, 'innerHeight', 'get').mockReturnValue(1000);
-      component.toggleMenu('trj-cre', mockEvent(100, 80));
-      expect(component.menuPosition()?.placement).toBe('below');
-    });
-  });
-
-  describe('onDocumentClick', () => {
-    it('should close menu when clicking outside actions-cell', () => {
-      component.openMenuId.set('trj-cre');
-      const event = { target: document.createElement('div') } as unknown as MouseEvent;
-      component.onDocumentClick(event);
-      expect(component.openMenuId()).toBeNull();
-    });
-
-    it('should keep menu open when clicking inside actions-cell', () => {
-      component.openMenuId.set('trj-cre');
-      const actionsCell = document.createElement('div');
-      actionsCell.classList.add('actions-cell');
-      const innerBtn = document.createElement('button');
-      actionsCell.appendChild(innerBtn);
-      const event = { target: innerBtn } as unknown as MouseEvent;
-      component.onDocumentClick(event);
-      expect(component.openMenuId()).toBe('trj-cre');
-    });
   });
 
   describe('deleteProduct', () => {
-    it('should close the menu', () => {
-      component.openMenuId.set('trj-cre');
-      component.deleteProduct('trj-cre');
-      expect(component.openMenuId()).toBeNull();
+    it('should open a confirmation dialog with product name', () => {
+      component.deleteProduct('trj-cre', 'Tarjeta de Crédito');
+      expect(confirmDialogServiceMock.open).toHaveBeenCalledWith(
+        expect.objectContaining({
+          title: 'Eliminar producto',
+          message: '¿Estás seguro de eliminar el producto "Tarjeta de Crédito"?',
+          confirmLabel: 'Eliminar',
+        }),
+      );
+    });
+
+    it('should call deleteProduct on service and show success toast on confirm', () => {
+      productServiceMock.deleteProduct.mockReturnValue(of(void 0));
+      component.deleteProduct('trj-cre', 'Tarjeta de Crédito');
+      const { onConfirm } = confirmDialogServiceMock.open.mock.calls[0][0];
+      onConfirm();
+      expect(productServiceMock.deleteProduct).toHaveBeenCalledWith('trj-cre');
+      expect(notificationServiceMock.show).toHaveBeenCalledWith(
+        'Producto eliminado correctamente',
+        'success',
+      );
     });
   });
 });

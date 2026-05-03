@@ -63,7 +63,10 @@
                     <fa-icon [icon]="pencil"></fa-icon>
                     Editar
                   </app-dropdown-item>
-                  <app-dropdown-item variant="danger" (click)="deleteProduct(product.id, product.name)">
+                  <app-dropdown-item
+                    variant="danger"
+                    (click)="deleteProduct(product.id, product.name)"
+                  >
                     <fa-icon [icon]="trash"></fa-icon>
                     Eliminar
                   </app-dropdown-item>
